@@ -1,0 +1,7 @@
+node_modules/
+package-lock.json
+.DS_Store
+.env
+adika*.gz
+adika*.log
+mgob/data/mgob.db
