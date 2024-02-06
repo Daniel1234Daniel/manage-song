@@ -35,8 +35,8 @@ router.patch('/:id', async (req, res) => {
 // Remove a song
 router.delete('/:id', async (req, res) => {
   try {
-    await Song.findByIdAndRemove(req.params.id);
-    res.sendStatus(204);
+    const song =  await Song.findByIdAndDelete(req.params.id);
+    res.sendStatus(song);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
