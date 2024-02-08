@@ -35,8 +35,8 @@ router.patch('/:id', async (req, res) => {
 // Remove a song
 router.delete('/:id', async (req, res) => {
   try {
-    const song =  await Song.findByIdAndDelete(req.params.id);
-    res.sendStatus(song);
+    await Song.findByIdAndDelete(req.params.id);
+    res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -83,7 +83,18 @@ router.get('/statistics/artists', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+router.get('/statistics/albumsong', async (req, res) => {
+  try {
+    const songAlbumStats = await Song.aggregate([
+      { $group: { _id: '$album', totalSongs: { $sum: 1 }} },
+      { $project: { album: '$_id', totalSongs: 1, _id: 0 } },
+    ]);
 
+    res.json(songAlbumStats);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 router.get('/genre/:genre', async (req, res) => {
   try {
     const genre = req.params.genre.toLowerCase(); 
