@@ -9,6 +9,9 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
+app.get('/', (req,res) => {
+  res.send('yo it workss');
+});
 app.use('/api/songs', songRoutes);
 
 // Connect to MongoDB
